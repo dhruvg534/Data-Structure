@@ -1,66 +1,59 @@
-#include <iostream>
+#include<iostream>
+#include<vector>
 using namespace std;
 
-void swap_(int *a, int* b)
+/*we will solve this suing bubble sort*/
+
+void swap_(int*a, int*b)
 {
-    int temp;
-    temp = *a;
-    *a=*b;
+    int temp = *a;
+    *a = *b;
     *b = temp;
 }
 
-void bubble_sort(int arr[])
+void bubble_sort(vector<int> *arr)
 {
-    for(int i=0;i<10-1;i++) // Represents pass
-    {
-        bool swap = false; // this is a flag if its zero after a pass then the no of swaps is zero 
-        for(int j=0; j<10-i-1;j++)
+    if((*arr).size() == 0)
+        return ;
+    else{
+        bool flag = false;
+        for(int i=0; i<arr->size()-1; i++)
         {
-            if(arr[j]>arr[j+1])
+            for(int j=0; j<arr->size()-i-1; j++)
             {
-                swap_(&arr[j], &arr[j+1]);
-                swap = true;
+                if(arr->at(j)> arr->at(j+1)){
+                    swap_(&(arr->at(j)), &(arr->at(j+1)));
+                    flag = true;
+                }
             }
+
+            if (flag == false) // optimisation of bubble sort
+                return;
+            
+            // cout<<arr->at(arr->size()-i-1)<<endl;
         }
-        if (!swap) // if no swaps occured then the list is already sorted
-            return;
+        // cout<<arr->at(0)<<endl;
+
     }
-    return ;
 
     /*
-    no of comparisons = n-1 + n-2 + n-3 +..............+1 = o(n2)
-    no of swaps = n-1 + n-2 + n-3 +..............+1 = o(n2)
+    no of passes = o(n-1)
+    no of comparisons = o(n2)
+    no of swaps = o(n2)
 
-    bubble sort is stable in nature
-    bubble sort is adaptive in nature (made it using thr flag swap)
-    swap helps in improving the bubble sort and makes it adaptive in nature
-    
+    time complexity 
+        for best case - o(n)
+        for worst case - o(n2)
+    space complexity - o(1)
     */
-
-}
-
-void display(int arr[])
-{
-    for(int i=0; i<10;i++)
-    {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
 }
 
 int main()
 {
-    int arr[10];
-    printf("\nEnter the list here: ");
-    for(int i=0; i<10;i++)
-        scanf("%d", &arr[i]);
-    
-    printf("list before sorting is: ");
-    display(arr);
-    bubble_sort(arr);
-    printf("List after sorting is: ");
-    display(arr);
-
-    return 0;
-
+    vector<int> arr={10,30,22,12,56,3,2,1,9};
+    bubble_sort(&arr);
+    for(auto it = arr.begin(); it!= arr.end(); it++)
+    {
+        cout<<*it<<endl;
+    }
 }
